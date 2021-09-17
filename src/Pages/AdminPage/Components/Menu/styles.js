@@ -8,7 +8,7 @@ const hover = keyframes`
 
 export const Container = styled.div`
     grid-area: menu;
-    width: ${ ({ isMenuHidden }) => isMenuHidden ? '4vw' : '16.1vw' };
+    width: ${ ({ isMenuHidden }) => isMenuHidden ? '4vw' : '20vw' };
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
@@ -36,6 +36,7 @@ export const Header = styled.div`
 
     img {
         width: ${ ({ isMenuHidden }) => isMenuHidden ? '60px' : '250px' };
+        max-width: 100%;
     }
 `;
 
@@ -54,7 +55,7 @@ export const Items = styled.div`
     cursor: pointer;
 
     div > span {
-        margin-right: ${ ({ isMenuHidden }) => isMenuHidden ? '0' : '30px' };
+        margin-right: ${ ({ isMenuHidden }) => isMenuHidden ? '0' : '5px' };
     }
 
     span {
@@ -104,6 +105,7 @@ export const ButtonClose = styled.div`
 
         
         transition: border-radius .2s ease-in-out;
+        transition: opacity .3s ease;
         
         span {
             transform: rotate(${ ({ isMenuHidden }) => isMenuHidden ? '180deg' : '0' });
@@ -111,7 +113,7 @@ export const ButtonClose = styled.div`
         }
 
         &:hover{
-            background-color: var(--secondary-bg-color);
+            opacity: .7;
         }
     }
 `;

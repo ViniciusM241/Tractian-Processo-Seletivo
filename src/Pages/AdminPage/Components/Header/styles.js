@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.header`
     /* width: 100%; */
     position: sticky;
     top: 0;
 `;
 
 export const Top = styled.div`
-    height: 80px;
+    height: 70px;
     padding: 0 15px;
 
     display: flex;
@@ -26,33 +26,6 @@ export const Wrapper = styled.div`
     align-items: center;
 `;
 
-export const Notifications = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    span.bell {
-        font-size: 1.4rem;
-        color: #929299;
-        cursor: pointer;
-    }
-
-
-    transition: background-color .3s ease;
-
-    &:hover {
-        background-color: #EEEEEE;
-    }
-`;
-
-export const Profile = styled.div`
-
-`;
-
 export const Bottom = styled.div`
     padding: 10px;
 
@@ -64,6 +37,7 @@ export const Bottom = styled.div`
 
     background-color: var(--primary-light-bg-color);
     border-bottom: .5px solid rgba(0, 0, 0, .20);
+    border-top: .5px solid rgba(0, 0, 0, .20);
     box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
 `;
 

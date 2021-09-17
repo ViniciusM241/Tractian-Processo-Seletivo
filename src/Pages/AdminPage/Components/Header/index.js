@@ -1,19 +1,18 @@
 import React from 'react';
 
-import { Container, Top, Wrapper, Notifications, Profile, Bottom, StyledLink } from './styles';
-import { BellFilled } from '@ant-design/icons';
-import { Avatar, Badge, Select } from 'antd';
+import { Container, Top, Wrapper, Bottom, StyledLink } from './styles';
+import { Select } from 'antd';
 import { useHistory } from 'react-router';
-
-import profilePicture from '../../../../Assets/profile_picture.png';
-
+import Notifications from './Components/Notifications';
+import Profile from './Components/Profile';
 
 const { Option } = Select;
 
 function Header (props) {
 
     const history = useHistory();
-    const histories = [ 'Home', ...history.location.pathname.split('/') ];
+    const histories = history.location.pathname.split('/');
+    const [ currentUnit, setCurrentUnit ] = props.currentUnit;
     
     const History = (props) => {
         const text = props.children.substring(0, 1).toUpperCase() + props.children.substring(1);
@@ -34,25 +33,22 @@ function Header (props) {
         <Container>
             <Top>
                 {/* Gerar automático de acordo com o que a API trazer */}
-                <Select defaultValue="geral" bordered={ false } style={{ width: '120px' }}>
-                    <Option value="geral"> Geral </Option>
-                    <Option value="unidade1"> Unidade 1 </Option>
-                    <Option value="unidade2"> Unidade 2 </Option>
+                <Select 
+                    defaultValue={ `${ currentUnit }` } 
+                    bordered={ false } 
+                    style={{ minWidth: '140px', fontSize: '1.2rem', fontWeight: '400' }} 
+                    onChange={ (value) => setCurrentUnit(value) }
+                >
+                    <Option value="0"> Geral </Option>
+                    {
+                        props.units.map(item => {
+                            return <Option key={ item.id } value={ item.id }> { item.name } </Option>
+                        })
+                    }
                 </Select>
                 <Wrapper>
-                    <Notifications>
-                        <Badge color="var(--primary-color)" count={5}>
-                            <BellFilled className="bell" />
-                        </Badge>
-                    </Notifications>
-                    <Profile>
-                        <Avatar 
-                            size={ 64 } 
-                            shape="circle"
-                            alt="Profile Picture"
-                            src={ profilePicture } 
-                        />
-                    </Profile>
+                    <Notifications unreadNotifications={ props.unreadNotifications } />
+                    <Profile company={ props.company } />
                 </Wrapper>
             </Top>
             <Bottom>

@@ -9,6 +9,7 @@ import {
     UsergroupAddOutlined,
     RightOutlined
 } from '@ant-design/icons';
+import { Link } from 'react-router-dom'
 
 import logo from '../../../../Assets/logo.png';
 import logoMin from '../../../../Assets/logo_min.png';
@@ -16,18 +17,22 @@ import logoMin from '../../../../Assets/logo_min.png';
 const menuItems = [
     { 
         name: 'Monitoramento',
+        to: '/monitor',
         Icon: AlertOutlined
     },
     { 
         name: 'Ativos',
+        to: '/monitor/assets',
         Icon: ApartmentOutlined
     },
     { 
         name: 'Unidades',
+        to: '/monitor/units',
         Icon: GoldOutlined
     },
     { 
         name: 'Funcionários',
+        to: '/monitor/employees',
         Icon: UsergroupAddOutlined
     },
 ];
@@ -39,14 +44,29 @@ function Menu (props) {
     const Item = (props) => {
 
         return (
-            <Items isMenuHidden={ isMenuHidden }>
-                <div>
-                    { React.createElement(props.Icon) }
-                    { isMenuHidden || props.children }
-                </div>
-                { isMenuHidden || <RightOutlined className="arrow" /> }
-            </Items>
+            <Link to={ props.to } style={{ width: '100%' }} >
+                <Items isMenuHidden={ isMenuHidden }>
+                    <div>
+                        { React.createElement(props.Icon) }
+                        { isMenuHidden ?  null : props.children }
+                    </div>
+                    { isMenuHidden ? null : <RightOutlined className="arrow" /> }
+                </Items>
+            </Link>
         );
+    }
+
+    const handleMenu = () => {
+        localStorage.removeItem('@show-menu-bar')
+
+        if (isMenuHidden) {
+            localStorage.setItem('@show-menu-bar', 0)
+            setIsMenuHidden(0);
+        }
+        else {
+            localStorage.setItem('@show-menu-bar', 1)
+            setIsMenuHidden(1);
+        }
     }
 
     return (
@@ -55,10 +75,10 @@ function Menu (props) {
                 <img src={ isMenuHidden ? logoMin : logo } alt="Tractian Logo" />
             </Header>
             {
-                menuItems.map((item, index) => (<Item key={ index } Icon={ item.Icon } > { item.name } </Item>))
+                menuItems.map((item, index) => (<Item key={ index } Icon={ item.Icon } to={ item.to } > { item.name } </Item>))
             }
             <ButtonClose isMenuHidden={ isMenuHidden } >
-                <div className="wrapper" onClick={ () => setIsMenuHidden(!isMenuHidden) } >
+                <div className="wrapper" onClick={ handleMenu } >
                     <DoubleLeftOutlined />
                 </div>
             </ButtonClose>

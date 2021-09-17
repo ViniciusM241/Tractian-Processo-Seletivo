@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
     grid-area: section;
-    margin-left: ${ ({ isMenuHidden }) => isMenuHidden ? '4vw' : '16.1vw' };
+    margin-left: ${ ({ isMenuHidden }) => isMenuHidden ? '4vw' : '20vw' };
     transition: margin .3s ease;
     height: 100%;
 
@@ -22,5 +22,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Main = styled.main`
-    
+    width: 100%;
+    min-height: calc(100vh - 20px - 97px);
+    padding: 10px;
 `;
