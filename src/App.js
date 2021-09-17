@@ -1,10 +1,20 @@
+import { 
+    Route,
+    BrowserRouter,
+    Switch
+} from 'react-router-dom';
 
+import AdminPage from './Pages/AdminPage';
 
-function App() {
+function App () {
+
     return (
-        <div className="App">
-            OLA
-        </div>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={ AdminPage } />
+                <Route path="*" component={ () => (<h1 style={{ textAlign: 'center' }}> 404 - Not Found </h1>) } />
+            </Switch>
+        </BrowserRouter>
     );
 }
 

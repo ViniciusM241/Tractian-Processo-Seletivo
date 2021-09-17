@@ -1,7 +1,6 @@
 import { createGlobalStyle  } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-    @import '~antd/dist/antd.css';
     
     *, :after, :before {
         box-sizing: border-box;
@@ -21,13 +20,15 @@ const GlobalStyle = createGlobalStyle`
         --secondary-bg-color: #273345;
         --primary-font-color: #18181B;
         --secondary-font-color: #52525B;
+        --primary-light-font-color: #FFFFFF;
+        --secondary-light-font-color: #DBEAFE;
         --success: #54C112;
         --warning: #FFC107;
         --error: #EC2323;
         --secondary: #E2E2E2;
         --bg-color: #E5E5E5;
 
-        font-size: 60%;
+        font-size: 100%;
         font-family: 'Roboto', sans-serif;
     }
 `;

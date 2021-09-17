@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 
 import GlobalStyle from './styles';
+import './styles/index';
+import App from './App';
 
 ReactDOM.render(
     <Fragment>
@@ -10,4 +11,4 @@ ReactDOM.render(
         <App />
     </Fragment>,
     document.getElementById('root')
-);
+  );
