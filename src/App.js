@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 
 import AdminPage from './Pages/AdminPage';
+import "antd/dist/antd.css";
 
 function App () {
 

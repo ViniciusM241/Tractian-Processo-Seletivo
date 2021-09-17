@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
         --tertiary-color: #1F2937;
         --primary-bg-color: #1D2633;
         --secondary-bg-color: #273345;
+        --primary-light-bg-color: #FFFFFF;
         --primary-font-color: #18181B;
         --secondary-font-color: #52525B;
         --primary-light-font-color: #FFFFFF;
