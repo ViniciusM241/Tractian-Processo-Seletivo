@@ -12,7 +12,6 @@ function Header (props) {
 
     const history = useHistory();
     const histories = history.location.pathname.split('/');
-    const [ currentUnit, setCurrentUnit ] = props.currentUnit;
     
     const History = (props) => {
         const text = props.children.substring(0, 1).toUpperCase() + props.children.substring(1);
@@ -34,12 +33,12 @@ function Header (props) {
             <Top>
                 {/* Gerar automático de acordo com o que a API trazer */}
                 <Select 
-                    defaultValue={ `${ currentUnit }` } 
+                    defaultValue={ props.currentUnit } 
                     bordered={ false } 
                     style={{ minWidth: '140px', fontSize: '1.2rem', fontWeight: '400' }} 
-                    onChange={ (value) => setCurrentUnit(value) }
+                    onChange={ (value) => props.setCurrentUnit(value) }
                 >
-                    <Option value="0"> Geral </Option>
+                    <Option value={ 0 }> Geral </Option>
                     {
                         props.units.map(item => {
                             return <Option key={ item.id } value={ item.id }> { item.name } </Option>

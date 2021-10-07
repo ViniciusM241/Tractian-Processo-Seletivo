@@ -13,49 +13,16 @@ import Units from './Pages/Units';
 
 import api from '../../services/api';
 
-function getNotifications (data) {
-    
-    const unreadNotifications = data.reduce((result, item) => {
-        if (item.status === 'inDowntime') {
-            result.push({
-                type: 'error',
-                text: `🚩 ${ item.name } em parada`,
-                to: `/assets/#${ item.id }`
-            });
-        }
-    
-        if (item.status === 'inAlert') {
-            result.push({
-                type: 'warning',
-                text: `⚠ ${ item.name } em alerta`,
-                to: `/assets/#${ item.id }`
-            });
-        }
-        return result;
-    }, []);
-
-    return unreadNotifications;
-}
-
 function AdminPage () {
 
     const isMenuHidden = useState(Number(localStorage.getItem('@show-menu-bar')));
     const [ assets, setAssets ] = useState([]);
     const [ units, setUnits ] = useState([]);
-    const currentUnit = useState(0);
+    const [ currentUnit, setCurrentUnit ] = useState(0);
     const [ company, setCompany ] = useState([]);
     const [ unreadNotifications, setUnreadNotifications ] = useState([]);
 
     useEffect(() => {
-        api.get('/assets')
-            .then(({ data }) => {
-                setAssets(data);
-                setUnreadNotifications(getNotifications(data));
-            })
-            .catch(error => {
-                console.log(error);
-                // Show error
-            });
         api.get('/units')
             .then(({ data }) => {
                 setUnits(data);
@@ -74,6 +41,44 @@ function AdminPage () {
             });
     }, []);
 
+    useEffect(() => {
+        const getNotifications = (data) => {
+            const unreadNotifications = data.reduce((result, item) => {
+                if (item.unitId !== currentUnit && currentUnit !== 0 )
+                    return result;
+                if (item.status === 'inDowntime') {
+                    result.push({
+                        type: 'error',
+                        text: `🚩 ${ item.name } em parada`,
+                        to: `/assets/#${ item.id }`
+                    });
+                }
+            
+                if (item.status === 'inAlert') {
+                    result.push({
+                        type: 'warning',
+                        text: `⚠ ${ item.name } em alerta`,
+                        to: `/assets/#${ item.id }`
+                    });
+                }
+                return result;
+            }, []);
+            return unreadNotifications;
+        };
+
+        api.get('/assets')
+            .then(({ data }) => {
+                const units = currentUnit === 0 ? data : data.filter(data => data.unitId === currentUnit);
+                setAssets(units);
+                setUnreadNotifications(getNotifications(units));
+            })
+            .catch(error => {
+                console.log(error);
+                // Show error
+            });
+
+    }, [currentUnit])
+
     return (
         <Container>
             <Menu isMenuHidden={ isMenuHidden } />
@@ -83,9 +88,10 @@ function AdminPage () {
                     units={ units } 
                     company={ company }
                     currentUnit={ currentUnit }
+                    setCurrentUnit={ setCurrentUnit }
                 />
                 <Main>
-                    <Route exact path="/monitor/" component={ () => <Monitor currentUnit={ currentUnit } /> } />
+                    <Route exact path="/monitor/" component={ () => <Monitor currentUnit={ currentUnit } assets={ assets } /> } />
                     <Route path="/monitor/assets" component={ () => <Assets currentUnit={ currentUnit } assets={ assets } /> } />
                     <Route path="/monitor/units" component={ () => <Units /> } />
                     <Route path="/monitor/employees" component={ () => <Employees currentUnit={ currentUnit } /> } />

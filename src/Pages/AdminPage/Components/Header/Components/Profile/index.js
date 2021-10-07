@@ -24,8 +24,8 @@ const content = () => (
         {
             menuItems.map((item, index) => {
                 return (
-                    <Link to={ item.to } style={{ width: '100%' }}>
-                        <ItemContainer key={ index }> 
+                    <Link key={ index } to={ item.to } style={{ width: '100%' }}>
+                        <ItemContainer> 
                                 { React.createElement(item.Icon) }
                                 { item.name }
                         </ItemContainer>
